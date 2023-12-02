@@ -6,13 +6,6 @@ class Autentifikasi extends CI_Controller
 
     public function index()
     {
-        if($this->session->userdata('email')){
-            if ($data['role_id'] == 1) {
-                redirect('admin');
-            }
-            redirect('user');
-        }
-
         $this->form_validation->set_rules('email', 'Alamat Email', 'required|trim|valid_email', [
             'required' => 'Email Harus diisi!!',
             'valid_email' => 'Email Tidak Benar!!'
@@ -49,7 +42,7 @@ class Autentifikasi extends CI_Controller
 
                 $this->session->set_userdata($data);
                 if ($data['role_id'] == 1) {
-                    redirect('admin');
+                    redirect('admin/dashboard');
                 }
                 redirect('user');
             } else {
@@ -63,14 +56,7 @@ class Autentifikasi extends CI_Controller
     }
 
     public function registrasi()
-    {
-        if($this->session->userdata('email')){
-            if ($data['role_id'] == 1) {
-                redirect('admin');
-            }
-            redirect('user');
-        }
-        
+    {   
         $this->form_validation->set_rules('nama', 'Nama Lengkap', 'required', [
             'required' => 'Nama Belum diis!!'
         ]);
