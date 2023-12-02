@@ -9,7 +9,7 @@
       <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
           <li class="nav-item">
-            <a href="<?= base_url('admin/tambah_data_matras'); ?>" class="btn btn-warning my-2 my-sm-0 ml-0 ml-md-5" type="submit">Tambah Data Baru</a>
+            <a href="<?= base_url('LapanganMatras/create'); ?>" class="btn btn-warning my-2 my-sm-0 ml-0 ml-md-5" type="submit">Tambah Data Baru</a>
           </li>
         </ul>
         <form action="" method="post" class="form-inline my-2 my-lg-0">
@@ -45,8 +45,8 @@
             <td><?= $l['selesai']; ?></td>
             <td><?= $l['lama_main']; ?> Jam</td>
             <td>
-            <a href="<?= base_url('admin/ubah_lapangan_matras/').$l['kode_sewa'] ?>"><i class="text-warning mr-2 fas fa-fw fa-pen"></i></a>
-            <a class="hapus" href="<?= base_url('admin/hapus_lapangan_matras/').$l['kode_sewa'] ?>"><i class="text-info fas fa-fw fa-trash"></i></a>
+            <a href="<?= base_url('LapanganMatras/update/').$l['kode_sewa'] ?>"><i class="text-warning mr-2 fas fa-fw fa-pen"></i></a>
+            <a class="hapus" href="<?= base_url('LapanganMatras/delete/').$l['kode_sewa'] ?>"><i class="text-info fas fa-fw fa-trash"></i></a>
             </td>
         </tr>
         <?php endforeach; ?>

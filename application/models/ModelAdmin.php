@@ -3,9 +3,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class ModelAdmin extends CI_Model
 {
-    public function get_data($table,$limit,$start,$keyword = null,$nama){
+    public function get_data($table,$limit,$start,$keyword = null,$match){
         if ($keyword) {
-            $this->db->like($nama,$keyword);
+            $this->db->like($match[0],$keyword);
+            $this->db->or_like($match[1],$keyword);
+            $this->db->or_like($match[2],$keyword);
         }
 		return $this->db->get($table,$limit,$start);
 	}

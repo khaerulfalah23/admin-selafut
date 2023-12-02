@@ -27,14 +27,14 @@
 <!-- Nav Item - Tables -->
 
 <li class="nav-item">
-    <a class="nav-link" href="<?= base_url('admin/get_lapangan_matras'); ?>">
+    <a class="nav-link" href="<?= base_url('LapanganMatras/read'); ?>">
         <i class="fas fa-fw fa-table"></i>
         <span>Data Lapangan Matras</span></a>
 </li>
 
 <!-- Nav Item - Tables -->
 <li class="nav-item">
-    <a class="nav-link" href="<?= base_url('admin/get_lapangan_sintetis'); ?>">
+    <a class="nav-link" href="<?= base_url('LapanganSintetis/read'); ?>">
         <i class="fas fa-fw fa-table"></i>
         <span>Data Lapangan Sintetis</span></a>
 </li>
