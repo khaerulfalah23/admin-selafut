@@ -5,7 +5,7 @@ class LapanganSintetis extends CI_Controller {
 
     public function create()
     {
-        $data['usersesion'] = $this->ModelUser->cekData(['email' => $this->session->userdata('email')])->row_array();
+        $data['usersesion'] = $this->ModelAdmin->cekData(['email' => $this->session->userdata('email')])->row_array();
         $this->form_validation->set_rules('nama', 'Nama', 'required|trim', [
             'required' => 'Nama Harus diisi!!',
         ]);
@@ -62,7 +62,7 @@ class LapanganSintetis extends CI_Controller {
 
         $data['start'] = $this->uri->segment(3);
         $data['lapangan'] = $this->ModelAdmin->get_data('lapangan_sintetis',$config['per_page'],$data['start'],$data['keyword'])->result_array();
-        $data['usersesion'] = $this->ModelUser->cekData(['email' => $this->session->userdata('email')])->row_array();
+        $data['usersesion'] = $this->ModelAdmin->cekData(['email' => $this->session->userdata('email')])->row_array();
 
 		$this->load->view('templates/admin_header',$data);
         $this->load->view('templates/admin_sidebar');
@@ -75,7 +75,7 @@ class LapanganSintetis extends CI_Controller {
     {
         $where = ['kode_sewa' => $kode];
         $data['lapangan']=$this->ModelAdmin->get_data_where($where,'lapangan_sintetis')->row_array();
-        $data['usersesion'] = $this->ModelUser->cekData(['email' => $this->session->userdata('email')])->row_array();
+        $data['usersesion'] = $this->ModelAdmin->cekData(['email' => $this->session->userdata('email')])->row_array();
 
         $this->form_validation->set_rules('nama', 'Nama', 'required|trim', [
             'required' => 'Nama Harus diisi!!',
