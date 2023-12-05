@@ -31,6 +31,11 @@ class ModelAdmin extends CI_Model
 		$this->db->delete($table);
 	}
 
+    public function cekData($where = null)
+    {
+        return $this->db->get_where('admin', $where);
+    }
+
     public function getData($table)
     {
         return $this->db->get($table);
