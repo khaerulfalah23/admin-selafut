@@ -3,11 +3,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class ModelAdmin extends CI_Model
 {
-    public function get_data($table,$limit,$start,$keyword = null,$match){
+    public function get_data($table,$limit,$start,$keyword = null){
         if ($keyword) {
-            $this->db->like($match[0],$keyword);
-            $this->db->or_like($match[1],$keyword);
-            $this->db->or_like($match[2],$keyword);
+            $this->db->like('nama_pemesan',$keyword);
+            $this->db->or_like('kode_sewa',$keyword);
+            $this->db->or_like('email',$keyword);
+            $this->db->or_like('tanggal',$keyword);
+            $this->db->or_like('jam_main',$keyword);
         }
 		return $this->db->get($table,$limit,$start);
 	}

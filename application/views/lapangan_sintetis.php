@@ -12,8 +12,8 @@
             <a href="<?= base_url('LapanganSintetis/create'); ?>" class="btn btn-warning my-2 my-sm-0 ml-0 ml-md-5" type="submit">Tambah Data Baru</a>
           </li>
         </ul>
-        <form action="" method="post" class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" name="keyword" autocomplete="off" type="search" placeholder="Search">
+        <form action="<?= base_url('LapanganSintetis/read'); ?>" method="post" class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" name="keyword" autocomplete="off" autofocus type="search" placeholder="Search keyword...">
           <button class="btn btn-warning my-2 my-sm-0" type="submit">Search</button>
         </form>
       </div>
@@ -34,7 +34,16 @@
         </tr>
       </thead>
       <tbody>
-          <?php foreach ($lapangan as $l): ?>
+        <?php if(empty($lapangan)): ?>
+          <tr>
+            <td colspan="9">
+              <div class="alert alert-danger" role="alert">
+                Data tidak ditemukan!
+              </div>
+            </td>
+          </tr>
+        <?php endif; ?>  
+        <?php foreach ($lapangan as $l): ?>
         <tr>
             <th scope="row"><?= ++$start; ?></th>
             <td><?= $l['kode_sewa']; ?></td>

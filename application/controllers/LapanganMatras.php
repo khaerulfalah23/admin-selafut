@@ -42,12 +42,17 @@ class LapanganMatras extends CI_Controller {
         // Ambil data keyword
         if($this->input->post('keyword')) {
             $data['keyword'] = $this->input->post('keyword');
-            $this->session->set_userdata('keyword',$data['keyword']);
         }else{
-            $data['keyword'] = $this->input->post('keyword');
+            $data['keyword'] = null;
         }
 
         // config
+        $this->db->like('nama_pemesan',$data['keyword']);
+        $this->db->or_like('kode_sewa',$data['keyword']);
+        $this->db->or_like('email',$data['keyword']);
+        $this->db->or_like('tanggal',$data['keyword']);
+        $this->db->or_like('jam_main',$data['keyword']);
+        $this->db->from('lapangan_matras');
         $config['base_url'] = 'http://localhost/admin-selafut/LapanganMatras/read';
         $config['total_rows'] = $this->db->count_all_results();
         $config['per_page'] = 5;
@@ -56,7 +61,7 @@ class LapanganMatras extends CI_Controller {
         $this->pagination->initialize($config);
 
         $data['start'] = $this->uri->segment(3);
-        $data['lapangan'] = $this->ModelAdmin->get_data('lapangan_matras',$config['per_page'],$data['start'],$data['keyword'],['kode_sewa','nama_pemesan','email'])->result_array();
+        $data['lapangan'] = $this->ModelAdmin->get_data('lapangan_matras',$config['per_page'],$data['start'],$data['keyword'])->result_array();
         $data['usersesion'] = $this->ModelUser->cekData(['email' => $this->session->userdata('email')])->row_array();
 
 		$this->load->view('templates/admin_header',$data);

@@ -12,8 +12,8 @@
             <a href="<?= base_url('LapanganMatras/create'); ?>" class="btn btn-warning my-2 my-sm-0 ml-0 ml-md-5" type="submit">Tambah Data Baru</a>
           </li>
         </ul>
-        <form action="" method="post" class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" name="keyword" autocomplete="off" type="search" placeholder="Search">
+        <form action="<?= base_url('LapanganMatras/read'); ?>" method="post" class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" name="keyword" autocomplete="off" autofocus type="search" placeholder="Search keyword...">
           <button class="btn btn-warning my-2 my-sm-0" type="submit">Search</button>
         </form>
       </div>
@@ -34,21 +34,30 @@
         </tr>
       </thead>
       <tbody>
-          <?php foreach ($lapangan as $l): ?>
-        <tr>
-            <th scope="row"><?= ++$start; ?></th>
-            <td><?= $l['kode_sewa']; ?></td>
-            <td><?= $l['nama_pemesan']; ?></td>
-            <td><?= $l['email']; ?></td>
-            <td><?= $l['tanggal']; ?></td>
-            <td><?= $l['jam_main']; ?></td>
-            <td><?= $l['selesai']; ?></td>
-            <td><?= $l['lama_main']; ?> Jam</td>
-            <td>
-            <a href="<?= base_url('LapanganMatras/update/').$l['kode_sewa'] ?>"><i class="text-warning mr-2 fas fa-fw fa-pen"></i></a>
-            <a class="hapus" href="<?= base_url('LapanganMatras/delete/').$l['kode_sewa'] ?>"><i class="text-info fas fa-fw fa-trash"></i></a>
+        <?php if(empty($lapangan)): ?>
+          <tr>
+            <td colspan="9">
+              <div class="alert alert-danger" role="alert">
+                Data tidak ditemukan!
+              </div>
             </td>
-        </tr>
+          </tr>
+        <?php endif; ?>  
+        <?php foreach ($lapangan as $l): ?>
+          <tr>
+              <th scope="row"><?= ++$start; ?></th>
+              <td><?= $l['kode_sewa']; ?></td>
+              <td><?= $l['nama_pemesan']; ?></td>
+              <td><?= $l['email']; ?></td>
+              <td><?= $l['tanggal']; ?></td>
+              <td><?= $l['jam_main']; ?></td>
+              <td><?= $l['selesai']; ?></td>
+              <td><?= $l['lama_main']; ?> Jam</td>
+              <td>
+              <a href="<?= base_url('LapanganMatras/update/').$l['kode_sewa'] ?>"><i class="text-warning mr-2 fas fa-fw fa-pen"></i></a>
+              <a class="hapus" href="<?= base_url('LapanganMatras/delete/').$l['kode_sewa'] ?>"><i class="text-info fas fa-fw fa-trash"></i></a>
+              </td>
+          </tr>
         <?php endforeach; ?>
       </tbody>
     </table>
