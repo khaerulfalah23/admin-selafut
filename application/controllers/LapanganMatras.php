@@ -3,9 +3,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class LapanganMatras extends CI_Controller {
 
+    public function __construct()
+    {
+        parent::__construct();
+        cek_login();
+    }
+
     public function create()
     {
-        $data['usersesion'] = $this->ModelUser->cekData(['email' => $this->session->userdata('email')])->row_array();
+        $data['usersesion'] = $this->ModelAdmin->cekData(['email' => $this->session->userdata('email')])->row_array();
         $this->form_validation->set_rules('nama', 'Nama', 'required|trim', [
             'required' => 'Nama Harus diisi!!',
         ]);
@@ -21,19 +27,68 @@ class LapanganMatras extends CI_Controller {
             $this->load->view('form_lapangan_matras');
             $this->load->view('templates/admin_footer');
         } else {
+            $nama = htmlspecialchars($this->input->post('nama', true));
+            $email = htmlspecialchars($this->input->post('email', true));
+            $tanggal = htmlspecialchars($this->input->post('tanggal', true));
             $jam_main = htmlspecialchars($this->input->post('jam_main', true));
             $selesai = htmlspecialchars($this->input->post('selesai', true));
+            $lama_main = $selesai - $jam_main;
+            $harga_sewa = $lama_main*30000;
+            $kode_sewa = time();
+            
             $data = [
-                'nama_pemesan' => htmlspecialchars($this->input->post('nama', true)),
-                'email' => htmlspecialchars($this->input->post('email', true)),
-                'tanggal' => htmlspecialchars($this->input->post('tanggal', true)),
+                'kode_sewa' => $kode_sewa,
+                'nama_pemesan' => $nama,
+                'email' => $email,
+                'tanggal' => $tanggal,
                 'jam_main' => $jam_main,
                 'selesai' => $selesai,
-                'lama_main' => $selesai - $jam_main
+                'lama_main' => $lama_main,
+                'status' => 'Proses'
             ];
-            $this->ModelAdmin->insert_data($data,'lapangan_matras');
-            $this->session->set_flashdata('flash','Ditambahkan');
-		    redirect('LapanganMatras/read');
+
+            $data_transaksi=[
+				'nama_pemesan' => $nama,
+				'lapangan' => 'Matras',
+				'email' => $email,
+				'tanggal' => $tanggal,
+				'jam_main' => $jam_main,
+				'selesai' => $selesai,
+				'lama_main' => $lama_main,
+				'harga_sewa' => $harga_sewa,
+				'status' => 'Proses',
+				'kode_sewa' => $kode_sewa
+			];
+
+            $whereTanggal = ['tanggal' => $tanggal];
+            $whereJamMain = ['jam_main' => $jam_main];
+            $whereJamSelasai = ['selesai' => $selesai];
+
+            $validasiTanggal = $this->ModelAdmin->validasiTanggal($whereTanggal,'lapangan_matras')->num_rows();
+            $validasiJamMain = $this->ModelAdmin->validasiJamMain($whereJamMain,'lapangan_matras')->num_rows();
+            $validasiJamSelesai = $this->ModelAdmin->validasiJamSelesai($whereJamSelasai,'lapangan_matras')->num_rows();
+
+            if ($data['lama_main'] > 0) {
+                if ($validasiTanggal > 0) {
+                    if ($validasiJamMain || $validasiJamSelesai > 0) {
+                        $this->session->set_flashdata('pesan','Silahkan lihat jadwal terlebih dahulu sebelum memesan!');
+                        redirect('LapanganMatras/create');
+                    } else {
+                        $this->session->set_flashdata('flash','Ditambahkan');
+                        $this->ModelAdmin->insert_transaksi($data_transaksi,'transaksi');
+                        $this->ModelAdmin->insert_data($data,'lapangan_matras');
+                        redirect('LapanganMatras/read');
+                    }
+                } else {
+                    $this->session->set_flashdata('flash','Ditambahkan');
+                    $this->ModelAdmin->insert_transaksi($data_transaksi,'transaksi');
+                    $this->ModelAdmin->insert_data($data,'lapangan_matras');
+                    redirect('LapanganMatras/read');
+                }
+            } else {
+                $this->session->set_flashdata('jam','Waktu yang anda masukan salah!');
+                redirect('LapanganMatras/create');
+            }
         }
     }
 
@@ -62,7 +117,7 @@ class LapanganMatras extends CI_Controller {
 
         $data['start'] = $this->uri->segment(3);
         $data['lapangan'] = $this->ModelAdmin->get_data('lapangan_matras',$config['per_page'],$data['start'],$data['keyword'])->result_array();
-        $data['usersesion'] = $this->ModelUser->cekData(['email' => $this->session->userdata('email')])->row_array();
+        $data['usersesion'] = $this->ModelAdmin->cekData(['email' => $this->session->userdata('email')])->row_array();
 
 		$this->load->view('templates/admin_header',$data);
         $this->load->view('templates/admin_sidebar');
@@ -74,8 +129,8 @@ class LapanganMatras extends CI_Controller {
     public function update($kode)
     {
         $where = ['kode_sewa' => $kode];
-        $data['lapangan']=$this->ModelAdmin->get_data_where($where,'lapangan_matras')->row_array();
-        $data['usersesion'] = $this->ModelUser->cekData(['email' => $this->session->userdata('email')])->row_array();
+        $data['lapangan'] = $this->ModelAdmin->get_data_where($where,'lapangan_matras')->row_array();
+        $data['usersesion'] = $this->ModelAdmin->cekData(['email' => $this->session->userdata('email')])->row_array();
 
         $this->form_validation->set_rules('nama', 'Nama', 'required|trim', [
             'required' => 'Nama Harus diisi!!',
@@ -92,22 +147,72 @@ class LapanganMatras extends CI_Controller {
             $this->load->view('form_ubah_matras');
             $this->load->view('templates/admin_footer');
         } else {
-            $kode = $this->input->post('kode_sewa');
+            $nama = htmlspecialchars($this->input->post('nama', true));
+            $email = htmlspecialchars($this->input->post('email', true));
+            $tanggal = htmlspecialchars($this->input->post('tanggal', true));
             $jam_main = htmlspecialchars($this->input->post('jam_main', true));
             $selesai = htmlspecialchars($this->input->post('selesai', true));
+            $lama_main = $selesai - $jam_main;
+            $harga_sewa = $lama_main*30000;
+            
             $data = [
-                'nama_pemesan' => htmlspecialchars($this->input->post('nama', true)),
-                'email' => htmlspecialchars($this->input->post('email', true)),
-                'tanggal' => htmlspecialchars($this->input->post('tanggal', true)),
+                'nama_pemesan' => $nama,
+                'email' => $email,
+                'tanggal' => $tanggal,
                 'jam_main' => $jam_main,
                 'selesai' => $selesai,
-                'lama_main' => $selesai - $jam_main
+                'lama_main' => $lama_main,
+                'status' => 'Proses'
             ];
 
-            $where=['kode_sewa' => $kode];
-    		$this->ModelAdmin->update_data($where,$data,'lapangan_matras');
-            $this->session->set_flashdata('flash','Diubah');
-    		redirect('LapanganMatras/read');
+            $data_transaksi=[
+				'nama_pemesan' => $nama,
+				'lapangan' => 'Matras',
+				'email' => $email,
+				'tanggal' => $tanggal,
+				'jam_main' => $jam_main,
+				'selesai' => $selesai,
+				'lama_main' => $lama_main,
+				'harga_sewa' => $harga_sewa,
+				'status' => 'Proses'
+			];
+
+            $whereTanggal = ['tanggal' => $tanggal];
+            $whereJamMain = ['jam_main' => $jam_main];
+            $whereJamSelasai = ['selesai' => $selesai];
+            $validasiTanggal = $this->ModelAdmin->validasiTanggal($whereTanggal,'lapangan_matras')->num_rows();
+            $validasiJamMain = $this->ModelAdmin->validasiJamMain($whereJamMain,'lapangan_matras')->num_rows();
+            $validasiJamSelesai = $this->ModelAdmin->validasiJamSelesai($whereJamSelasai,'lapangan_matras')->num_rows();
+            $dataLapangan['lapangan'] = $this->ModelAdmin->get_data_where($where,'lapangan_matras')->row_array();
+
+            if($tanggal == $dataLapangan['lapangan']['tanggal'] && $jam_main == $dataLapangan['lapangan']['jam_main'] && $selesai == $dataLapangan['lapangan']['selesai']) {
+                $this->ModelAdmin->update_data($where,$data,'lapangan_matras');
+                $this->ModelAdmin->update_data($where,$data_transaksi,'transaksi');
+                $this->session->set_flashdata('flash','Diubah');
+                redirect('LapanganMatras/read');
+            }
+
+            if ($data['lama_main'] > 0) {
+                if ($validasiTanggal > 0) {
+                    if ($validasiJamMain || $validasiJamSelesai > 0) {
+                        $this->session->set_flashdata('pesan','Silahkan lihat jadwal terlebih dahulu sebelum melakukan update data!');
+                        redirect('LapanganMatras/update/'.$kode);
+                    } else {
+                        $this->ModelAdmin->update_data($where,$data,'lapangan_matras');
+                        $this->ModelAdmin->update_data($where,$data_transaksi,'transaksi');
+                        $this->session->set_flashdata('flash','Diubah');
+                        redirect('LapanganMatras/read');
+                    }
+                } else {
+                    $this->ModelAdmin->update_data($where,$data,'lapangan_matras');
+                    $this->ModelAdmin->update_data($where,$data_transaksi,'transaksi');
+                    $this->session->set_flashdata('flash','Diubah');
+                    redirect('LapanganMatras/read');
+                }
+            } else {
+                $this->session->set_flashdata('jam','Waktu yang anda masukan salah!');
+                redirect('LapanganMatras/update/'.$kode);
+            }
         }
     }
 
@@ -115,6 +220,7 @@ class LapanganMatras extends CI_Controller {
     {
 		$where = ['kode_sewa' => $kode];
 		$this->ModelAdmin->delete_data($where,'lapangan_matras');
+		$this->ModelAdmin->delete_data($where,'transaksi');
         $this->session->set_flashdata('flash','Dihapus');
 		redirect('LapanganMatras/read');
 	}

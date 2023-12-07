@@ -1,4 +1,6 @@
-<div class="container">
+<div class="container mb-4">
+<div class="jam" title="Kesalahan Input!" data-flashdata="<?= $this->session->flashdata('jam'); ?>"></div>
+<div class="lapangan" title="Maaf Sudah ada yang Booking" data-flashdata="<?= $this->session->flashdata('pesan'); ?>"></div>
     <div class="row mt-3 justify-content-md-center">
         <div class="col-md-6">
             <div class="card">
@@ -6,20 +8,20 @@
                     Form Tambah Data Lapangan Matrass
                 </div>
                 <div class="card-body">
-                    <form action="" method="post">
+                    <form action="<?= base_url('LapanganMatras/create'); ?>" method="post">
                         <div class="form-group">
                             <label for="nama">Nama Pemesan</label>
-                            <input type="text" class="form-control" id="nama" name="nama">
+                            <input type="text" class="form-control" id="nama" name="nama" value="<?= set_value('nama'); ?>">
                             <small class="form-text text-danger"><?= form_error('nama'); ?></small>
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="text" class="form-control" id="email" name="email">
+                            <input type="text" class="form-control" id="email" name="email" value="<?= set_value('email'); ?>">
                             <small class="form-text text-danger"><?= form_error('email'); ?></small>
                         </div>
                         <div class="form-group">
                             <label for="tanggal">Tanggal</label>
-                            <input type="date" class="form-control" id="tanggal" name="tanggal">
+                            <input type="date" class="form-control" id="tanggal" name="tanggal" value="<?= set_value('tanggal'); ?>">
                             <small class="form-text text-danger"><?= form_error('tanggal'); ?></small>
                         </div>
                         <div class="form-group">
@@ -46,7 +48,6 @@
                             <label for="selesai">Selesai</label>
                             <select class="form-control" id="selesai" name="selesai">
                                 <option>--pilih--</option>
-                                <option value="09.00">09.00</option>
                                 <option value="10.00">10.00</option>
                                 <option value="11.00">11.00</option>
                                 <option value="12.00">12.00</option>

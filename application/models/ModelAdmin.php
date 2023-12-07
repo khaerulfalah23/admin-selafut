@@ -24,13 +24,38 @@ class ModelAdmin extends CI_Model
 	}
 
     public function update_data($where,$data,$table){
-		$this->db->WHERE($where);
-		$this->db->UPDATE($table,$data);
+		$this->db->where($where);
+		$this->db->update($table,$data);
 	}
 
     public function delete_data($where,$table){
 		$this->db->where($where);
 		$this->db->delete($table);
+	}
+
+    public function validasiTanggal($where,$table){
+        $this->db->select('tanggal');
+        $this->db->from($table);
+        $this->db->where($where);
+        return $this->db->get();
+    }
+
+    public function validasiJamMain($where,$table){
+		$this->db->select('jam_main');
+		$this->db->from($table);
+		$this->db->where($where);
+		return $this->db->get();
+	}
+
+    public function validasiJamSelesai($where,$table){
+		$this->db->select('selesai');
+		$this->db->from($table);
+		$this->db->where($where);
+		return $this->db->get();
+	}
+
+    public function insert_transaksi($data_transaksi,$table){
+		$this->db->insert($table,$data_transaksi);
 	}
 
     public function cekData($where = null)

@@ -6,6 +6,10 @@ class Autentifikasi extends CI_Controller
 
     public function index()
     {
+        if($this->session->userdata('email')){
+            redirect('admin/dashboard');
+        }
+
         $this->form_validation->set_rules('email', 'Alamat Email', 'required|trim|valid_email', [
             'required' => 'Email Harus diisi!!',
             'valid_email' => 'Email Tidak Benar!!'
@@ -30,7 +34,7 @@ class Autentifikasi extends CI_Controller
 
         $admin = $this->ModelAdmin->cekData(['email' => $email])->row_array();
         
-        //jika usernya ada
+        //jika adminnya ada
         if ($admin) {
             //cek password
             if ($password == $admin['password']) {
@@ -50,7 +54,6 @@ class Autentifikasi extends CI_Controller
     public function logout()
     {
         $this->session->unset_userdata('email');
-        // $this->session->set_flashdata('logout', '<div class="alert alert-success alert-message" role="alert">Anda berhasil logout!</div>');
         $this->session->set_flashdata('logout', 'Silahkan login kembali');
         redirect('autentifikasi');
     }

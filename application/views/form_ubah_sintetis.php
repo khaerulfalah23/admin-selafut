@@ -1,4 +1,6 @@
-<div class="container">
+<div class="container mb-4">
+<div class="jam" title="Kesalahan Input!" data-flashdata="<?= $this->session->flashdata('jam'); ?>"></div>
+<div class="lapangan" title="Maaf Sudah ada yang Booking" data-flashdata="<?= $this->session->flashdata('pesan'); ?>"></div>
     <div class="row mt-3 justify-content-md-center">
         <div class="col-md-6">
             <div class="card">
@@ -45,8 +47,7 @@
                         <div class="form-group">
                             <label for="selesai">Selesai</label>
                             <select class="form-control" id="selesai" name="selesai">
-                            <option value="09.00" <?php if($lapangan['jam_main'] == "09.00"){ echo "selected"; } ?> >09.00</option>
-                                <option value="10.00" <?php if($lapangan['selesai'] == "10.00"){ echo "selected"; } ?>  >10.00</option>
+                                <option value="10.00" <?php if($lapangan['selesai'] == "10.00"){ echo "selected"; } ?> >10.00</option>
                                 <option value="11.00" <?php if($lapangan['selesai'] == "11.00"){ echo "selected"; } ?> >11.00</option>
                                 <option value="12.00" <?php if($lapangan['selesai'] == "12.00"){ echo "selected"; } ?> >12.00</option>
                                 <option value="13.00" <?php if($lapangan['selesai'] == "13.00"){ echo "selected"; } ?> >13.00</option>
