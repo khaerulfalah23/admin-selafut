@@ -17,4 +17,12 @@ class ModelUser extends CI_Model
     {
         return $this->db->get_where('user', $where);
     }
+    public function get_data($table,$limit,$start,$keyword = null){
+        if ($keyword) {
+            $this->db->like('id',$keyword);
+            $this->db->or_like('nama',$keyword);
+            $this->db->or_like('email',$keyword);
+        }
+		return $this->db->get($table,$limit,$start);
+	}
 }
