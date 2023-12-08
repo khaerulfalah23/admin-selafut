@@ -15,10 +15,11 @@ class Admin extends CI_Controller {
         $config['base_url'] = 'http://localhost/admin-selafut/admin/dashboard';
         $config['total_rows'] = $this->ModelAdmin->getData('transaksi')->num_rows();
         $config['per_page'] = 5;
-
+        
         // initialize
         $this->pagination->initialize($config);
         
+        $data['judul'] = 'Dashboard';
         $data['start'] = $this->uri->segment(3);
         $data['transaksi'] = $this->ModelAdmin->get_data('transaksi',$config['per_page'],$data['start'],null,'nama_pemesan')->result_array();
         $data['usersesion'] = $this->ModelAdmin->cekData(['email' => $this->session->userdata('email')])->row_array();
@@ -30,23 +31,25 @@ class Admin extends CI_Controller {
 		$this->load->view('templates/admin_header',$data);
         $this->load->view('templates/admin_sidebar');
         $this->load->view('templates/admin_topbar');
-        $this->load->view('dashboard');
+        $this->load->view('admin/dashboard');
         $this->load->view('templates/admin_footer');
 	}
 
     public function profile()
     {
+        $data['judul'] = 'Profile';
         $data['usersesion'] = $this->ModelAdmin->cekData(['email' => $this->session->userdata('email')])->row_array();
 
         $this->load->view('templates/admin_header',$data);
         $this->load->view('templates/admin_sidebar');
         $this->load->view('templates/admin_topbar');
-        $this->load->view('profile');
+        $this->load->view('admin/profile');
         $this->load->view('templates/admin_footer');
     }
 
     public function ubahProfil()
     {
+        $data['judul'] = 'Ubah Profile';
         $data['usersesion'] = $this->ModelAdmin->cekData(['email' => $this->session->userdata('email')])->row_array();
 
         $this->form_validation->set_rules('nama', 'Nama Lengkap', 'required|trim', [
@@ -57,7 +60,7 @@ class Admin extends CI_Controller {
             $this->load->view('templates/admin_header',$data);
             $this->load->view('templates/admin_sidebar');
             $this->load->view('templates/admin_topbar');
-            $this->load->view('ubah_profile');
+            $this->load->view('admin/ubah_profile');
             $this->load->view('templates/admin_footer');
         } else {
             $nama = $this->input->post('nama', true);

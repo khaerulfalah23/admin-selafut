@@ -9,7 +9,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Admin</title>
+    <!-- Logo -->
+    <link rel="shortcut icon" type="image/icon" href="<?= base_url().'assets/admin/img/logo.png'?>"/>
+
+    <title>Admin Selafut | <?= $judul; ?></title>
 
     <!-- Custom fonts for this template-->
     <link href="<?= base_url('assets/admin/'); ?>vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">

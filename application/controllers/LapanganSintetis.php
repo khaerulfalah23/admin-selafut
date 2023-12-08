@@ -11,6 +11,7 @@ class LapanganSintetis extends CI_Controller {
 
     public function create()
     {
+        $data['judul'] = 'Lapangan Sintetis';
         $data['usersesion'] = $this->ModelAdmin->cekData(['email' => $this->session->userdata('email')])->row_array();
         $this->form_validation->set_rules('nama', 'Nama', 'required|trim', [
             'required' => 'Nama Harus diisi!!',
@@ -24,7 +25,7 @@ class LapanganSintetis extends CI_Controller {
             $this->load->view('templates/admin_header',$data);
             $this->load->view('templates/admin_sidebar');
             $this->load->view('templates/admin_topbar');
-            $this->load->view('form_lapangan_sintetis');
+            $this->load->view('LapanganSintetis/tambah');
             $this->load->view('templates/admin_footer');
         } else {
             $nama = htmlspecialchars($this->input->post('nama', true));
@@ -115,6 +116,7 @@ class LapanganSintetis extends CI_Controller {
         // initialize
         $this->pagination->initialize($config);
 
+        $data['judul'] = 'Lapangan Sintetis';
         $data['start'] = $this->uri->segment(3);
         $data['lapangan'] = $this->ModelAdmin->get_data('lapangan_sintetis',$config['per_page'],$data['start'],$data['keyword'])->result_array();
         $data['usersesion'] = $this->ModelAdmin->cekData(['email' => $this->session->userdata('email')])->row_array();
@@ -122,13 +124,14 @@ class LapanganSintetis extends CI_Controller {
 		$this->load->view('templates/admin_header',$data);
         $this->load->view('templates/admin_sidebar');
         $this->load->view('templates/admin_topbar');
-        $this->load->view('lapangan_sintetis');
+        $this->load->view('LapanganSintetis/data');
         $this->load->view('templates/admin_footer');
 	}
 
     public function update($kode)
     {
         $where = ['kode_sewa' => $kode];
+        $data['judul'] = 'Lapangan Sintetis';
         $data['lapangan'] = $this->ModelAdmin->get_data_where($where,'lapangan_sintetis')->row_array();
         $data['usersesion'] = $this->ModelAdmin->cekData(['email' => $this->session->userdata('email')])->row_array();
 
@@ -144,7 +147,7 @@ class LapanganSintetis extends CI_Controller {
             $this->load->view('templates/admin_header',$data);
             $this->load->view('templates/admin_sidebar');
             $this->load->view('templates/admin_topbar');
-            $this->load->view('form_ubah_sintetis');
+            $this->load->view('LapanganSintetis/ubah');
             $this->load->view('templates/admin_footer');
         } else {
             $nama = htmlspecialchars($this->input->post('nama', true));

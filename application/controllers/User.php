@@ -24,6 +24,7 @@ public function read()
         // initialize
         $this->pagination->initialize($config);
 
+        $data['judul'] = 'User';
         $data['start'] = $this->uri->segment(3);
         $data['user'] = $this->ModelUser->get_data('user',$config['per_page'],$data['start'],$data['keyword'])->result_array();
         $data['usersesion'] = $this->ModelAdmin->cekData(['email' => $this->session->userdata('email')])->row_array();
@@ -31,12 +32,13 @@ public function read()
 		$this->load->view('templates/admin_header',$data);
         $this->load->view('templates/admin_sidebar');
         $this->load->view('templates/admin_topbar');
-        $this->load->view('data_user');
+        $this->load->view('user/data');
         $this->load->view('templates/admin_footer');
     }
 
     public function create()
     {
+        $data['judul'] = 'User';
         $data['usersesion'] = $this->ModelAdmin->cekData(['email' => $this->session->userdata('email')])->row_array();
         $this->form_validation->set_rules('nama', 'Nama Lengkap', 'required', [
             'required' => 'Nama Belum diis!!'
@@ -55,7 +57,7 @@ public function read()
             $this->load->view('templates/admin_header',$data);
             $this->load->view('templates/admin_sidebar');
             $this->load->view('templates/admin_topbar');
-            $this->load->view('form_tambah_user');
+            $this->load->view('user/tambah');
             $this->load->view('templates/admin_footer');
         } else {
             $data = [
@@ -76,6 +78,7 @@ public function read()
     public function update($kode)
     {
         $where = ['id' => $kode];
+        $data['judul'] = 'User';
         $data['user']=$this->ModelAdmin->get_data_where($where,'user')->row_array();
         $data['usersesion'] = $this->ModelAdmin->cekData(['email' => $this->session->userdata('email')])->row_array();
 
@@ -95,7 +98,7 @@ public function read()
             $this->load->view('templates/admin_header',$data);
             $this->load->view('templates/admin_sidebar');
             $this->load->view('templates/admin_topbar');
-            $this->load->view('form_ubah_user');
+            $this->load->view('user/ubah');
             $this->load->view('templates/admin_footer');
         } else {   
             $data = [

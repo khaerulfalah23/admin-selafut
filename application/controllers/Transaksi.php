@@ -11,6 +11,7 @@ class Transaksi extends CI_Controller {
 
     public function create()
     {
+        $data['judul'] = 'Transaksi';
         $data['usersesion'] = $this->ModelAdmin->cekData(['email' => $this->session->userdata('email')])->row_array();
         $this->form_validation->set_rules('nama', 'Nama', 'required|trim', [
             'required' => 'Nama Harus diisi!!',
@@ -24,7 +25,7 @@ class Transaksi extends CI_Controller {
             $this->load->view('templates/admin_header',$data);
             $this->load->view('templates/admin_sidebar');
             $this->load->view('templates/admin_topbar');
-            $this->load->view('form_transaksi');
+            $this->load->view('Transaksi/tambah');
             $this->load->view('templates/admin_footer');
         } else {
             $nama = htmlspecialchars($this->input->post('nama', true));
@@ -140,6 +141,7 @@ class Transaksi extends CI_Controller {
         // initialize
         $this->pagination->initialize($config);
 
+        $data['judul'] = 'Transaksi';
         $data['start'] = $this->uri->segment(3);
         $data['transaksi'] = $this->ModelAdmin->get_data('transaksi',$config['per_page'],$data['start'],$data['keyword'])->result_array();
         $data['usersesion'] = $this->ModelAdmin->cekData(['email' => $this->session->userdata('email')])->row_array();
@@ -147,13 +149,14 @@ class Transaksi extends CI_Controller {
     		$this->load->view('templates/admin_header',$data);
         $this->load->view('templates/admin_sidebar');
         $this->load->view('templates/admin_topbar');
-        $this->load->view('data_transaksi');
+        $this->load->view('Transaksi/data');
         $this->load->view('templates/admin_footer');
 	  }
 
     public function update($kode)
     {
         $where = ['kode_sewa' => $kode];
+        $data['judul'] = 'Transaksi';
         $data['transaksi'] = $this->ModelAdmin->get_data_where($where,'transaksi')->row_array();
         $data['usersesion'] = $this->ModelAdmin->cekData(['email' => $this->session->userdata('email')])->row_array();
 
@@ -169,7 +172,7 @@ class Transaksi extends CI_Controller {
             $this->load->view('templates/admin_header',$data);
             $this->load->view('templates/admin_sidebar');
             $this->load->view('templates/admin_topbar');
-            $this->load->view('form_ubah_transaksi');
+            $this->load->view('Transaksi/ubah');
             $this->load->view('templates/admin_footer');
         } else {
             $nama = htmlspecialchars($this->input->post('nama', true));
@@ -222,58 +225,61 @@ class Transaksi extends CI_Controller {
                 }
                 $this->session->set_flashdata('flash','Diubah');
                 redirect('Transaksi/read');
-            }
-
-            if ($data['lama_main'] > 0) {
-              if ($validasiTanggal > 0) {
-                if ($lapangan == "Matras") {
-                  $validasiJamMain = $this->ModelAdmin->validasiJamMain($whereJamMain,'lapangan_matras')->num_rows();
-                  $validasiJamSelesai = $this->ModelAdmin->validasiJamSelesai($whereJamSelasai,'lapangan_matras')->num_rows();
-                  if ($validasiJamMain || $validasiJamSelesai > 0) {
-                      $this->session->set_flashdata('pesan','Silahkan lihat jadwal terlebih dahulu sebelum memesan!');
-                      redirect('Transaksi/update/'.$kode);
+            } else {
+              if ($data['lama_main'] > 0) {
+                if ($validasiTanggal > 0) {
+                  if ($lapangan == "Sintetis") {
+                    $validasiJamMain = $this->ModelAdmin->validasiJamMain($whereJamMain,'lapangan_sintetis')->num_rows();
+                    $validasiJamSelesai = $this->ModelAdmin->validasiJamSelesai($whereJamSelasai,'lapangan_sintetis')->num_rows();
+                    if ($validasiJamMain || $validasiJamSelesai > 0) {
+                        $this->session->set_flashdata('pesan','Silahkan lihat jadwal terlebih dahulu sebelum memesan!');
+                        redirect('Transaksi/update/'.$kode);
+                    } else {
+                        $this->ModelAdmin->update_data($where,$data_transaksi,'transaksi');
+                        $this->ModelAdmin->update_data($where,$data,'lapangan_sintetis');
+                        $this->ModelAdmin->insert_data($data,'lapangan_sintetis');
+                        $this->ModelAdmin->delete_data($where,'lapangan_matras');
+                        $this->session->set_flashdata('flash','Diubah');
+                        redirect('Transaksi/read');
+                    }
                   } else {
-                      $this->ModelAdmin->update_data($where,$data_transaksi,'transaksi');
-                      $this->ModelAdmin->update_data($where,$data,'lapangan_matras');
-                      $this->ModelAdmin->delete_data($where,'lapangan_sintetis');
-                      $this->ModelAdmin->insert_data($data,'lapangan_matras');
-                      $this->session->set_flashdata('flash','Diubah');
-                      redirect('Transaksi/read');
+                    $validasiJamMain = $this->ModelAdmin->validasiJamMain($whereJamMain,'lapangan_matras')->num_rows();
+                    $validasiJamSelesai = $this->ModelAdmin->validasiJamSelesai($whereJamSelasai,'lapangan_matras')->num_rows();
+                    if ($validasiJamMain || $validasiJamSelesai > 0) {
+                        $this->session->set_flashdata('pesan','Silahkan lihat jadwal terlebih dahulu sebelum memesan!');
+                        redirect('Transaksi/update/'.$kode);
+                    } else {
+                        $this->ModelAdmin->update_data($where,$data_transaksi,'transaksi');
+                        $this->ModelAdmin->update_data($where,$data,'lapangan_matras');
+                        $this->ModelAdmin->insert_data($data,'lapangan_matras');
+                        $this->ModelAdmin->delete_data($where,'lapangan_sintetis');
+                        $this->session->set_flashdata('flash','Diubah');
+                        redirect('Transaksi/read');
+                    }
                   }
-                } elseif ($lapangan == "Sintetis") {
-                  $validasiJamMain = $this->ModelAdmin->validasiJamMain($whereJamMain,'lapangan_sintetis')->num_rows();
-                  $validasiJamSelesai = $this->ModelAdmin->validasiJamSelesai($whereJamSelasai,'lapangan_sintetis')->num_rows();
-                  if ($validasiJamMain || $validasiJamSelesai > 0) {
-                      $this->session->set_flashdata('pesan','Silahkan lihat jadwal terlebih dahulu sebelum memesan!');
-                      redirect('Transaksi/update/'.$kode);
-                  } else {
-                      $this->ModelAdmin->update_data($where,$data_transaksi,'transaksi');
-                      $this->ModelAdmin->update_data($where,$data,'lapangan_sintetis');
-                      $this->ModelAdmin->delete_data($where,'lapangan_matras');
-                      $this->ModelAdmin->insert_data($data,'lapangan_sintetis');
-                      $this->session->set_flashdata('flash','Diubah');
-                      redirect('Transaksi/read');
+                } else {
+                  if ($lapangan == "Matras") {
+                    $this->ModelAdmin->update_data($where,$data_transaksi,'transaksi');
+                    $this->ModelAdmin->update_data($where,$data,'lapangan_matras');
+                    $this->ModelAdmin->delete_data($where,'lapangan_sintetis');
+                    $this->ModelAdmin->insert_data($data,'lapangan_matras');
+                    $this->session->set_flashdata('flash','Diubah');
+                    redirect('Transaksi/read');
+                  } elseif ($lapangan == "Sintetis") {
+                    $this->ModelAdmin->update_data($where,$data_transaksi,'transaksi');
+                    $this->ModelAdmin->update_data($where,$data,'lapangan_sintetis');
+                    $this->ModelAdmin->delete_data($where,'lapangan_matras');
+                    $this->ModelAdmin->insert_data($data,'lapangan_sintetis');
+                    $this->session->set_flashdata('flash','Diubah');
+                    redirect('Transaksi/read');
                   }
                 }
               } else {
-                if ($lapangan == "Matras") {
-                  $this->ModelAdmin->update_data($where,$data_transaksi,'transaksi');
-                  $this->ModelAdmin->update_data($where,$data,'lapangan_matras');
-                  $this->ModelAdmin->delete_data($where,'lapangan_sintetis');
-                  $this->session->set_flashdata('flash','Diubah');
-                  redirect('Transaksi/read');
-                } elseif ($lapangan == "Sintetis") {
-                  $this->ModelAdmin->update_data($where,$data_transaksi,'transaksi');
-                  $this->ModelAdmin->update_data($where,$data,'lapangan_sintetis');
-                  $this->ModelAdmin->delete_data($where,'lapangan_matras');
-                  $this->session->set_flashdata('flash','Diubah');
-                  redirect('Transaksi/read');
-                }
+                  $this->session->set_flashdata('jam','Waktu yang anda masukan salah!');
+                  redirect('Transaksi/update/'.$kode);
               }
-            } else {
-                $this->session->set_flashdata('jam','Waktu yang anda masukan salah!');
-                redirect('Transaksi/update/'.$kode);
             }
+
         }
     }
 
