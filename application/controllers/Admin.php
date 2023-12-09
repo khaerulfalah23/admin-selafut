@@ -23,7 +23,7 @@ class Admin extends CI_Controller {
         $data['start'] = $this->uri->segment(3);
         $data['transaksi'] = $this->ModelAdmin->get_data('transaksi',$config['per_page'],$data['start'],null,'nama_pemesan')->result_array();
         $data['usersesion'] = $this->ModelAdmin->cekData(['email' => $this->session->userdata('email')])->row_array();
-        $data['jumlahPenyewa'] = $this->ModelUser->getUserWhere(['role_id' => 2])->num_rows(); 
+        $data['jumlahPenyewa'] = $this->ModelUser->getUser()->num_rows(); 
         $data['totalLapanganSintetis'] = $this->ModelAdmin->getData('lapangan_sintetis')->num_rows();
         $data['totalLapanganMatras'] = $this->ModelAdmin->getData('lapangan_matras')->num_rows();
         $data['totalTransaksi'] = $this->ModelAdmin->getData('transaksi')->num_rows();

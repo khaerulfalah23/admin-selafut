@@ -8,6 +8,11 @@ class ModelUser extends CI_Model
         $this->db->insert('user', $data);
     }
 
+    public function getUser() 
+    {
+        return $this->db->get('user');
+    }
+
     public function getUserWhere($where) 
     {
         return $this->db->get_where('user',$where);
