@@ -12,12 +12,12 @@
                         <input value="<?= $transaksi['kode_sewa']; ?>" type="hidden" class="form-control" id="kode_sewa" name="kode_sewa">
                         <div class="form-group">
                             <label for="nama">Nama Pemesan</label>
-                            <input value="<?= $transaksi['nama_pemesan']; ?>" type="text" class="form-control" id="nama" name="nama">
+                            <input value="<?= $transaksi['nama_pemesan']; ?>" type="text" class="form-control" id="nama" name="nama" autocomplete="off">
                             <small class="form-text text-danger"><?= form_error('nama'); ?></small>
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input value="<?= $transaksi['email']; ?>" type="text" class="form-control" id="email" name="email">
+                            <input value="<?= $transaksi['email']; ?>" type="text" class="form-control" id="email" name="email" autocomplete="off">
                             <small class="form-text text-danger"><?= form_error('email'); ?></small>
                         </div>
                         <div class="form-group">

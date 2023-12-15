@@ -279,7 +279,6 @@ class Transaksi extends CI_Controller {
                   redirect('Transaksi/update/'.$kode);
               }
             }
-
         }
     }
 

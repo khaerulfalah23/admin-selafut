@@ -10,12 +10,12 @@
                         <input value="<?= $user['id']; ?>" type="hidden" class="form-control" id="kode_sewa" name="kode_sewa">
                         <div class="form-group">
                             <label for="nama">Nama</label>
-                            <input value="<?= $user['nama']; ?>" type="text" class="form-control" id="nama" name="nama">
+                            <input value="<?= $user['nama']; ?>" type="text" class="form-control" id="nama" name="nama" autocomplete="off">
                             <small class="form-text text-danger"><?= form_error('nama'); ?></small>
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input value="<?= $user['email']; ?>" type="text" class="form-control" id="email" name="email">
+                            <input value="<?= $user['email']; ?>" type="text" class="form-control" id="email" name="email" autocomplete="off">
                             <small class="form-text text-danger"><?= form_error('email'); ?></small>
                         </div>
                         <div class="form-group">

@@ -7,7 +7,7 @@
             <div class="login__inputs">
                 <div>
                   <div class="login__box">
-                    <input type="text" id="email" name="email" value="<?= set_value('email'); ?>" placeholder="Email" class="login__input">
+                    <input autocomplete="off" autofocus type="text" id="email" name="email" value="<?= set_value('email'); ?>" placeholder="Email" class="login__input">
                     <i class="ri-mail-fill"></i>
                   </div>
                   <?= form_error('email', '<small class="login__check-label" style="padding-left: 23px; color: black; font-weight: bold;">', '</small>'); ?>
@@ -20,15 +20,6 @@
                  </div>
                  <?= form_error('password', '<small class="login__check-label" style="padding-left: 23px; color: black; font-weight: bold;">', '</small>'); ?>
                </div>
-            </div>
-
-            <div class="login__check">
-               <div class="login__check-box">
-                  <input type="checkbox" class="login__check-input" id="user-check">
-                  <label for="user-check" class="login__check-label">Remember me</label>
-               </div>
-
-               <a href="" class="login__forgot">Forgot Password?</a>
             </div>
 
             <button type="submit" class="login__button">Login</button>
