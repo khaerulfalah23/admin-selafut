@@ -96,14 +96,12 @@ class Transaksi extends CI_Controller {
                     }
                   }
                 } else {
+                  $this->session->set_flashdata('flash','Ditambahkan');
+                  $this->ModelAdmin->insert_transaksi($data_transaksi,'transaksi');
                   if ($lapangan == "Matras") {
-                    $this->session->set_flashdata('flash','Ditambahkan');
-                    $this->ModelAdmin->insert_transaksi($data_transaksi,'transaksi');
                     $this->ModelAdmin->insert_data($data,'lapangan_matras');
                     redirect('Transaksi/read');
                   } elseif ($lapangan == "Sintetis") {
-                    $this->session->set_flashdata('flash','Ditambahkan');
-                    $this->ModelAdmin->insert_transaksi($data_transaksi,'transaksi');
                     $this->ModelAdmin->insert_data($data,'lapangan_sintetis');
                     redirect('Transaksi/read');
                   }
@@ -258,15 +256,14 @@ class Transaksi extends CI_Controller {
                     }
                   }
                 } else {
+                  $this->ModelAdmin->update_data($where,$data_transaksi,'transaksi');
                   if ($lapangan == "Matras") {
-                    $this->ModelAdmin->update_data($where,$data_transaksi,'transaksi');
                     $this->ModelAdmin->update_data($where,$data,'lapangan_matras');
                     $this->ModelAdmin->delete_data($where,'lapangan_sintetis');
                     $this->ModelAdmin->insert_data($data,'lapangan_matras');
                     $this->session->set_flashdata('flash','Diubah');
                     redirect('Transaksi/read');
                   } elseif ($lapangan == "Sintetis") {
-                    $this->ModelAdmin->update_data($where,$data_transaksi,'transaksi');
                     $this->ModelAdmin->update_data($where,$data,'lapangan_sintetis');
                     $this->ModelAdmin->delete_data($where,'lapangan_matras');
                     $this->ModelAdmin->insert_data($data,'lapangan_sintetis');
