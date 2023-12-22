@@ -66,7 +66,7 @@ class Transaksi extends CI_Controller {
             $whereTanggal = ['tanggal' => $tanggal];
             $whereJamMain = ['jam_main' => $jam_main];
             $whereJamSelasai = ['selesai' => $selesai];
-            $validasiTanggal = $this->ModelAdmin->validasiJamMain($whereTanggal,'transaksi')->num_rows();
+            $validasiTanggal = $this->ModelAdmin->validasiTanggal($whereTanggal,'transaksi')->num_rows();
 
             if ($data['lama_main'] > 0) {
                 if ($validasiTanggal > 0) {
