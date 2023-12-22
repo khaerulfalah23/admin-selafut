@@ -21,7 +21,7 @@ class Admin extends CI_Controller {
         
         $data['judul'] = 'Dashboard';
         $data['start'] = $this->uri->segment(3);
-        $data['transaksi'] = $this->ModelAdmin->get_data('transaksi',$config['per_page'],$data['start'],null,'nama_pemesan')->result_array();
+        $data['transaksi'] = $this->ModelAdmin->get_data_transaksi('transaksi',$config['per_page'],$data['start'],null,'nama_pemesan')->result_array();
         $data['usersesion'] = $this->ModelAdmin->cekData(['email' => $this->session->userdata('email')])->row_array();
         $data['jumlahPenyewa'] = $this->ModelUser->getUser()->num_rows(); 
         $data['totalLapanganSintetis'] = $this->ModelAdmin->getData('lapangan_sintetis')->num_rows();

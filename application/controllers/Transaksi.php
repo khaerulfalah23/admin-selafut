@@ -143,7 +143,7 @@ class Transaksi extends CI_Controller {
 
         $data['judul'] = 'Transaksi';
         $data['start'] = $this->uri->segment(3);
-        $data['transaksi'] = $this->ModelAdmin->get_data('transaksi',$config['per_page'],$data['start'],$data['keyword'])->result_array();
+        $data['transaksi'] = $this->ModelAdmin->get_data_transaksi('transaksi',$config['per_page'],$data['start'],$data['keyword'])->result_array();
         $data['usersesion'] = $this->ModelAdmin->cekData(['email' => $this->session->userdata('email')])->row_array();
 
     		$this->load->view('templates/admin_header',$data);
