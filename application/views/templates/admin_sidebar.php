@@ -13,36 +13,36 @@
 <hr class="sidebar-divider">
 
 <!-- Nav Item - Tables -->
-<li class="nav-item">
+<li class="<?= ($this->uri->segment(2) === 'dashboard') ? 'nav-item active' : 'nav-item' ?>">
     <a class="nav-link" href="<?= base_url('admin/dashboard'); ?>">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Dashboard</span></a>
 </li>
 
 <!-- Nav Item - Tables -->
-<li class="nav-item">
+<li class="<?= ($this->uri->segment(1) === 'user') ? 'nav-item active' : 'nav-item' ?>">
     <a class="nav-link" href="<?= base_url('user/read'); ?>">
-        <i class="fas fa-fw fa-table"></i>
+        <i class="fas fa-users fa-table"></i>
         <span>Data User</span></a>
 <!-- Nav Item - Tables -->
 
-<li class="nav-item">
+<li class="<?= ($this->uri->segment(1) === 'LapanganMatras') ? 'nav-item active' : 'nav-item' ?>">
     <a class="nav-link" href="<?= base_url('LapanganMatras/read'); ?>">
-        <i class="fas fa-fw fa-table"></i>
+        <i class="fas fa-fw fa-futbol"></i>
         <span>Data Lapangan Matras</span></a>
 </li>
 
 <!-- Nav Item - Tables -->
-<li class="nav-item">
+<li class="<?= ($this->uri->segment(1) === 'LapanganSintetis') ? 'nav-item active' : 'nav-item' ?>">
     <a class="nav-link" href="<?= base_url('LapanganSintetis/read'); ?>">
-        <i class="fas fa-fw fa-table"></i>
+        <i class="fas fa-fw fa-futbol"></i>
         <span>Data Lapangan Sintetis</span></a>
 </li>
 
 <!-- Nav Item - Tables -->
-<li class="nav-item">
+<li class="<?= ($this->uri->segment(1) === 'Transaksi') ? 'nav-item active' : 'nav-item' ?>">
     <a class="nav-link" href="<?= base_url('Transaksi/read'); ?>">
-        <i class="fas fa-fw fa-table"></i>
+        <i class="fas fa-fw fa-shopping-cart"></i>
         <span>Transaksi</span></a>
 </li>
 

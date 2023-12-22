@@ -23,11 +23,11 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Jadwal Lapangan Matras</div>
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Lapangan Matras</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $totalLapanganMatras; ?></div>
                     </div>
                     <div class="col-auto">
-                      <a href="<?= base_url('admin/get_lapangan_matras'); ?>"><i class="fas fa-fw fa-life-ring fa-2x text-success"></i></a>
+                      <a href="<?= base_url('admin/get_lapangan_matras'); ?>"><i class="fas fa-fw fa-futbol fa-2x text-success"></i></a>
                     </div>
                 </div>
             </div>
@@ -40,7 +40,7 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Jadwal Lapangan Sintetis
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Lapangan Sintetis
                         </div>
                         <div class="row no-gutters align-items-center">
                             <div class="col-auto">
@@ -49,7 +49,7 @@
                         </div>
                     </div>
                     <div class="col-auto">
-                      <a href="<?= base_url('admin/get_lapangan_sintetis'); ?>"><i class="fas fa-fw fa-life-ring fa-2x text-info"></i></a>
+                      <a href="<?= base_url('admin/get_lapangan_sintetis'); ?>"><i class="fas fa-fw fa-futbol fa-2x text-info"></i></a>
                     </div>
                 </div>
             </div>
@@ -89,16 +89,16 @@
     <table class="table table-bordered table-striped table-hover">
       <thead>
         <tr>
-            <th>No</th>
-            <th>Id Sewa</th>
-            <th>Nama Pemesan</th>
-            <th>Lapangan </th>
-            <th style="width: 130px;">Tanggal</th>
-            <th>Jam main</th>
-            <th>selesai</th>
-            <th style="width: 70px;">lama main</th>
-            <th style="width: 110px;">harga</th>
-            <th>status</th>
+            <th style="width: 5px;">No</th>
+            <th style="width: 85px;">Id Sewa</th>
+            <th style="width: 150px;">Nama Pemesan</th>
+            <th style="width: 30px;">Lapangan </th>
+            <th style="width: 116px;">Tanggal</th>
+            <th style="width: 94px;">Jam main</th>
+            <th style="width: 80px;">selesai</th>
+            <th style="width: 103px;">lama main</th>
+            <th style="width: 120px;">harga</th>
+            <th style="width: 5px;">status</th>
         </tr>
       </thead>
       <tbody>

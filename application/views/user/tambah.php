@@ -23,6 +23,7 @@
                             <small class="form-text text-danger"><?= form_error('password'); ?></small>
                         </div>
                         <button type="submit" class="btn btn-info float-right">Tambah</button>
+                        <a href="<?= base_url('user/read'); ?>" class="btn btn-outline-warning float-right mr-2">Batal</a>
                     </form>
                 </div>
             </div>

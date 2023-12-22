@@ -22,18 +22,17 @@
     <table class="table table-bordered table-striped table-hover">
       <thead>
         <tr>
-            <th>No</th>
-            <th>Id Sewa</th>
-            <th>Nama Pemesan</th>
-            <th>Lapangan </th>
-            <th>Email</th>
-            <th style="width: 130px;">Tanggal</th>
-            <th>Jam main</th>
-            <th>selesai</th>
-            <th style="width: 70px;">lama main</th>
-            <th style="width: 110px;">harga</th>
-            <th>status</th>
-            <th>aksi</th>
+            <th style="width: 5px;">No</th>
+            <th style="width: 85px;">Id Sewa</th>
+            <th style="width: 150px;">Email</th>
+            <th style="width: 30px;">Lapangan </th>
+            <th style="width: 116px;">Tanggal</th>
+            <th style="width: 95px;">Jam main</th>
+            <th style="width: 80px;">selesai</th>
+            <th style="width: 103px;">lama main</th>
+            <th style="width: 120px;">harga</th>
+            <th style="width: 5px;">status</th>
+            <th style="width: 70px;">aksi</th>
         </tr>
       </thead>
       <tbody>
@@ -50,16 +49,15 @@
         <tr>
             <th scope="row"><?= ++$start; ?></th>
             <td><?= $t['id_sewa']; ?></td>
-            <td><?= $t['nama_pemesan']; ?></td>
-            <td><?= $t['lapangan']; ?></td>
             <td><?= $t['email']; ?></td>
+            <td><?= $t['lapangan']; ?></td>
             <td><?= $t['tanggal']; ?></td>
             <td><?= $t['jam_main']; ?></td>
             <td><?= $t['selesai']; ?></td>
             <td><?= $t['lama_main']; ?> Jam</td>
             <td>Rp. <?= $t['harga_sewa']; ?></td>
             <td><?= $t['status']; ?></td>
-            <td>
+            <td style="text-alignt: center;">
             <a href="<?= base_url('transaksi/update/').$t['kode_sewa'] ?>"><i class="text-warning fas fa-fw fa-pen"></i></a>
             <a class="hapus" href="<?= base_url('transaksi/delete/').$t['kode_sewa'] ?>"><i class="text-info fas fa-fw fa-trash"></i></a>
             </td>

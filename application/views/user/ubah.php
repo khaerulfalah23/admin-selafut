@@ -15,7 +15,7 @@
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input value="<?= $user['email']; ?>" type="text" class="form-control" id="email" name="email" autocomplete="off">
+                            <input value="<?= $user['email']; ?>" type="text" class="form-control" id="email" name="email" autocomplete="off" readonly>
                             <small class="form-text text-danger"><?= form_error('email'); ?></small>
                         </div>
                         <div class="form-group">
@@ -24,6 +24,7 @@
                             <small class="form-text text-danger"><?= form_error('password'); ?></small>
                         </div>
                         <button type="submit" class="btn btn-info float-right">Tambah</button>
+                        <a href="<?= base_url('user/read'); ?>" class="btn btn-outline-warning float-right mr-2">Batal</a>
                     </form>
                 </div>
             </div>
