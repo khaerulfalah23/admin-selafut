@@ -123,15 +123,6 @@ class Transaksi extends CI_Controller {
         }
 
         // config
-        $this->db->like('id_sewa',$data['keyword']);
-        $this->db->or_like('nama_pemesan',$data['keyword']);
-        $this->db->or_like('kode_sewa',$data['keyword']);
-        $this->db->or_like('email',$data['keyword']);
-        $this->db->or_like('tanggal',$data['keyword']);
-        $this->db->or_like('lapangan',$data['keyword']);
-        $this->db->or_like('jam_main',$data['keyword']);
-        $this->db->or_like('status',$data['keyword']);
-        $this->db->from('transaksi');
         $config['base_url'] = 'http://localhost/admin-selafut/Transaksi/read';
         $config['total_rows'] = $this->db->count_all_results();
         $config['per_page'] = 5;

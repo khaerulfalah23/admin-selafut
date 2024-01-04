@@ -103,12 +103,6 @@ class LapanganMatras extends CI_Controller {
         }
 
         // config
-        $this->db->like('nama_pemesan',$data['keyword']);
-        $this->db->or_like('kode_sewa',$data['keyword']);
-        $this->db->or_like('email',$data['keyword']);
-        $this->db->or_like('tanggal',$data['keyword']);
-        $this->db->or_like('jam_main',$data['keyword']);
-        $this->db->from('lapangan_matras');
         $config['base_url'] = 'http://localhost/admin-selafut/LapanganMatras/read';
         $config['total_rows'] = $this->db->count_all_results();
         $config['per_page'] = 5;

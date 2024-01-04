@@ -13,10 +13,6 @@ public function read()
         }
 
         // config
-        $this->db->like('id',$data['keyword']);
-        $this->db->or_like('nama',$data['keyword']);
-        $this->db->or_like('email',$data['keyword']);
-        $this->db->from('user');
         $config['base_url'] = 'http://localhost/admin-selafut/user/read';
         $config['total_rows'] = $this->db->count_all_results();
         $config['per_page'] = 5;
