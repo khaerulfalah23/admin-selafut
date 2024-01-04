@@ -76,7 +76,7 @@
                                 <option value="Proses" <?php if($transaksi['status'] == "Proses"){ echo "selected"; } ?> >Proses</option>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-info float-right">Tambah</button>
+                        <button type="submit" class="btn btn-info float-right">Ubah</button>
                         <a href="<?= base_url('Transaksi/read'); ?>" class="btn btn-outline-warning float-right mr-2">Batal</a>
                     </form>
                 </div>
