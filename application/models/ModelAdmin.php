@@ -6,7 +6,7 @@ class ModelAdmin extends CI_Model
     public function get_data_transaksi($table,$limit,$start,$keyword = null){
         if ($keyword) {
             $this->db->like('id_sewa',$keyword);
-            $this->db->like('nama_pemesan',$keyword);
+            $this->db->or_like('nama_pemesan',$keyword);
             $this->db->or_like('kode_sewa',$keyword);
             $this->db->or_like('email',$keyword);
             $this->db->or_like('tanggal',$keyword);
